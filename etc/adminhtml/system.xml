@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2018 © Roma Technology Ltd. All rights reserved.
+* See COPYING.txt for license details.
+**/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+  <system>
+
+    <section id="map" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+      <class>separator-top</class>
+      <label>Maps</label>
+      <tab>contentful</tab>
+      <resource>RTech_Map::contentful_config</resource>
+
+      <group id="google" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+        <label>Google Maps</label>
+        <field id="api_key" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+          <label>API Key</label>
+        </field>
+      </group>
+
+      <group id="installer" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+        <label>Installer Map</label>
+        <field id="lat" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+          <label>Map Centre Latitude</label>
+        </field>
+        <field id="lon" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+          <label>Map Center Longitude</label>
+        </field>
+        <field id="zoom" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+          <label>Map Zoom</label>
+        </field>
+        <field id="customer_groups" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+          <label>Customer Groups</label>
+          <source_model>RTech\Map\Model\Config\Source\CustomerGroups</source_model>
+          <can_be_empty>1</can_be_empty>
+        </field>
+      </group>
+
+    </section>
+
+  </system>
+</config>

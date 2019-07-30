@@ -1,0 +1,86 @@
+<?php
+/**
+* Copyright © 2019 Roma Technology Limited. All rights reserved.
+* See COPYING.txt for license details.
+*/
+?>
+<section class="installerMap">
+  <div class="installerMap_Container">
+    <div class="installerMap_List_Container" id="panel">
+      <div class="installerMap_Search">
+        <label class="installmap_Nearest_Label" for="search"><?= __('Find installer') . ':'; ?></label>
+        <div class="installmap_Nearest">
+          <input type="text" placeholder="<?= __('Address/postcode'); ?>" class="installmap_Nearest_Input"/>
+          <input type="button" class="action primary installmap_Nearest_Search" value="<?= __('Search'); ?>"/>
+        </div>
+      </div>
+      <div class="resellerContainer_List_Container">
+        <ul id="resellerContainer_List">
+          <?php foreach ($block->getResellers() as $index=>$reseller) { ?>
+          <li>
+            <div class="resellerContainer" id="<?= $index; ?>">
+              <div class="resellerCompany">
+                <?php if (!empty($reseller['website'])) { ?>
+                <a href="<?= $reseller['website']; ?>" target="_blank"><?= $reseller['company']; ?></a>
+                <?php } else { echo $reseller['company']; } ?>
+              </div>
+              <div class="resellerType">
+                <?= $reseller['type']; ?>
+              </div>
+              <div class="resellerAddress">
+                <div class="resellerAddress_Street">
+                  <span><?= $reseller['street'][0]; ?></span>
+                  <?php if (!empty($reseller['street'][1])) { ?>
+                  <span><?= ', ' . $reseller['street'][1]; ?></span>
+                  <?php } ?>
+                </div>
+                <div class="resellerAddress_Region">
+                  <span><?= $reseller['city'];?></span>
+                  <?php if (!empty($reseller['region'])) { ?>
+                  <span><?= ', ' . $reseller['region'];?></span>
+                  <?php } ?>
+                </div>
+                <div class="resellerAddress_PostalArea">
+                  <span><?= $reseller['postcode'];?></span>
+                </div>
+              </div>
+              <div class="resellerContact">
+                <?php if (!empty($reseller['telephone'])) { ?>
+                <div class="resellerTelephone">
+                  <a class="resellerTelephone_Link" href="tel:<?= $reseller['telephone']; ?>" target="_blank"><?= $reseller['telephone']; ?></a>
+                </div>
+                <?php } ?>
+                <?php if (!empty($reseller['email'])) { ?>
+                <div class="resellerEmail">
+                  <a class="resellerEmail_Link" href="mailto:<?= $reseller['email']; ?>" target="_blank"><?= $reseller['email']; ?></a>
+                </div>
+                <?php } ?>
+              </div>
+            </div>
+          </li>
+          <?php } ?>
+        </ul>
+      </div>
+    </div>
+    <div class="installerMap_Map_Container" id="map">
+
+    </div>
+  </div>
+  <script>
+    var map;
+    var markers = [];
+  </script>
+  <script type="text/x-magento-init">
+{
+"*": {
+"gmap": {
+"apiKey" : <?= json_encode($block->getApiKey()); ?>,
+"lat" : <?= json_encode($block->getMapCentreLatitude()) ?>,
+"lon" : <?= json_encode($block->getMapCentreLongitude()); ?>,
+"zoom" : <?= json_encode($block->getMapZoom()); ?>,
+"resellers" : <?= json_encode($block->getResellers()); ?>
+}
+}
+}
+  </script>
+</section>
