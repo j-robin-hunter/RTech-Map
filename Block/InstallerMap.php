@@ -35,21 +35,29 @@ class InstallerMap extends AbstractMap {
   }
 
   public function getMapCentreLatitude() {
-    return $this->_configData->getInstallerMapCentreLatitude($this->_storeId);
+    //return $this->_configData->getInstallerMapCentreLatitude($this->_storeId);
+    return $this->getData('lat');
   }
 
   public function getMapCentreLongitude() {
-    return $this->_configData->getInstallerMapCentreLongitude($this->_storeId);
+    //return $this->_configData->getInstallerMapCentreLongitude($this->_storeId);
+    return $this->getData('lon');
   }
 
   public function getMapZoom() {
-    return $this->_configData->getInstallerMapZoom($this->_storeId);
+    //return $this->_configData->getInstallerMapZoom($this->_storeId);
+    return $this->getData('zoom');
   }
 
   public function getResellers() {
+    $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/log_file_name.log');
+$this->_logger = new \Zend\Log\Logger();
+$this->_logger->addWriter($writer);
+$this->_logger->info(explode(',', $this->getData('address_groups')));
+$this->_logger->info($this->_configData->getInstallerCustomerGroups($this->_storeId));
     $resellers = $this->_customerFactory->create()
       ->getCollection()
-      ->addFieldToFilter('group_id', array('in' => $this->_configData->getInstallerCustomerGroups($this->_storeId)));
+      ->addFieldToFilter('group_id', array('in' => explode(',', $this->getData('address_groups'))));
     $countries = $this->_countryFactory->create();
     $resellerLocations = [];
     foreach ($resellers->getItems() as $reseller) {

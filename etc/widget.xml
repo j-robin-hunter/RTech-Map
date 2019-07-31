@@ -12,13 +12,21 @@
           class="RTech\Map\Block\InstallerMap"
           placeholder_image="RTech_Contentful::images/rtech_map_installermap.png">
     <label translate="true">RTech Installer Map</label>
-    <description translate="true">RTech displ;ays installer map</description>
+    <description translate="true">RTech displays installer map</description>
     <parameters>
-      <parameter name="latitude" xsi:type="text" visible="true" required="true">
+      <parameter name="lat" xsi:type="text" visible="true" required="true">
         <label translate="true">Map Centre Latitude</label>
+      </parameter>
+      <parameter name="lon" xsi:type="text" visible="true" required="true">
+        <label translate="true">Map Center Longitude</label>
+      </parameter>
+      <parameter name="zoom" xsi:type="text" visible="true" required="true">
+        <label translate="true">Map Zoom</label>
+      </parameter>
+      <parameter name="address_groups" xsi:type="multiselect" source_model="RTech\Map\Model\Config\Source\CustomerGroups" visible="true" required="true">
+        <label translate="true">Select Address Categories</label>
       </parameter>
     </parameters>
   </widget>
-
 
 </widgets>

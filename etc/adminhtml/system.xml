@@ -21,24 +21,6 @@
         </field>
       </group>
 
-      <group id="installer" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-        <label>Installer Map</label>
-        <field id="lat" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
-          <label>Map Centre Latitude</label>
-        </field>
-        <field id="lon" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
-          <label>Map Center Longitude</label>
-        </field>
-        <field id="zoom" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
-          <label>Map Zoom</label>
-        </field>
-        <field id="customer_groups" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
-          <label>Customer Groups</label>
-          <source_model>RTech\Map\Model\Config\Source\CustomerGroups</source_model>
-          <can_be_empty>1</can_be_empty>
-        </field>
-      </group>
-
     </section>
 
   </system>
