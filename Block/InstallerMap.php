@@ -52,29 +52,30 @@ class InstallerMap extends AbstractMap {
       ->addFieldToFilter('group_id', array('in' => explode(',', $this->getData('address_groups'))));
     $countries = $this->_countryFactory->create();
     $resellerLocations = [];
+
     foreach ($resellers->getItems() as $reseller) {
-        $account = $this->_customerRepository->getById($reseller->getId());
-        foreach($reseller->getAddresses() as $address) {
-          if ($address->getLocation()) {
-            $location = explode(',', $address->getLocation());
-            if (count($location) == 2) {
-              $resellerLocations[] = [
-                'type' => $this->getGroupName($reseller->getGroupId()),
-                'company' => $address->getCompany(),
-                'street' => $address->getStreet(),
-                'city' => $address->getCity(),
-                'region' => $address->getRegion(),
-                'postcode' => $address->getPostcode(),
-                'country' => $countries->loadByCode($address->getCountryId())->getName(),
-                'telephone' => $address->getTelephone(),
-                'email' => $reseller->getEmail(),
-                'website' => $account->getCustomAttribute('website')->getValue(),
-                'lat' => $location[0],
-                'lon' => $location[1]
-              ];
-            }
+      $account = $this->_customerRepository->getById($reseller->getId());
+      foreach($reseller->getAddresses() as $address) {
+        if (!empty($address->getLocation())) {
+          $location = explode(',', $address->getLocation());
+          if (count($location) == 2) {
+            $resellerLocations[] = [
+              'type' => $this->getGroupName($reseller->getGroupId()),
+              'company' => $address->getCompany(),
+              'street' => $address->getStreet(),
+              'city' => $address->getCity(),
+              'region' => $address->getRegion(),
+              'postcode' => $address->getPostcode(),
+              'country' => $countries->loadByCode($address->getCountryId())->getName(),
+              'telephone' => $address->getTelephone(),
+              'email' => $reseller->getEmail(),
+              'website' => $account->getCustomAttribute('website') ? $account->getCustomAttribute('website')->getValue() : '',
+              'lat' => $location[0],
+              'lon' => $location[1]
+            ];
           }
         }
+      }
     }
     return $resellerLocations;
   }
