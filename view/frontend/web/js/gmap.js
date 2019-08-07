@@ -112,12 +112,17 @@ define([
           var infowincontent = document.createElement('div');
           infowincontent.setAttribute('id', index);
 
-          var beforeend = '<div class="infowindowCompany">';
-          if (reseller.website) {
+          var beforeend = '';
+
+          if (reseller.company) {
+            beforeend += '<div class="infowindowCompany">';
+            if (reseller.website) {
               beforeend += '<a class="infowindowComnpany_Link" href="' + reseller.website + '" target="_blank">' + reseller.company + '</a></div>';
-          } else {
-            beforeend += reseller.company + '</div>';
+            } else {
+              beforeend += reseller.company + '</div>';
+            }
           }
+
           beforeend +=
               '<div class="infowindowType">' + reseller.type + '</div>' +
               '<div class="infowindowLocation"><span>' + reseller.city + '</span><span>' + ', ' + reseller.postcode + '</span></div>' +
@@ -138,19 +143,27 @@ define([
 
           infowincontent.insertAdjacentHTML('beforeend', beforeend);
 
-          var pinColor = "C0C0C0";
-          var pinImage = new google.maps.MarkerImage(
-            "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-            new google.maps.Size(21, 34),
-            new google.maps.Point(0,0),
-            new google.maps.Point(10, 34)
-          );
+          var marker;
+          if (reseller.marker_color) {
+            var pinImage = new google.maps.MarkerImage(
+              "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + reseller.marker_color,
+              new google.maps.Size(21, 34),
+              new google.maps.Point(0,0),
+              new google.maps.Point(10, 34)
+            );
 
-          var marker = new google.maps.Marker({
-            map: map,
-            position: point,
-            icon: pinImage
-          });
+            marker = new google.maps.Marker({
+              map: map,
+              position: point,
+              icon: pinImage
+            });
+          } else {
+            marker = new google.maps.Marker({
+              map: map,
+              position: point
+            });
+          }
+
           markers.push(marker);
 
           marker.addListener('click', function() {
@@ -173,6 +186,12 @@ define([
         });
 
         $('.resellerContainer').mouseover(function () {
+          google.maps.event.trigger(markers[this.id], 'click');
+        });
+
+        $('.resellerContainer').click(function () {
+          map.setCenter(markers[this.id].position);
+          map.setZoom(10);
           google.maps.event.trigger(markers[this.id], 'click');
         });
 

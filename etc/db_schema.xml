@@ -1,0 +1,19 @@
+<!--
+/**
+ * Copyright 2018 © Roma Technology Ltd. All rights reserved.
+ * See COPYING.txt for license details.
+ **/
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="map_marker" resource="default" engine="innodb" comment="Magento Group Map Marker Details">
+    <column xsi:type="int" name="customer_group_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Magento Group ID"/>
+    <column xsi:type="int" name="marker_color" padding="10" unsigned="true" nullable="true" identity="false" comment="Marker color"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="customer_group_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="MAP_MARKER_CUSTOMER_GROUP_ID_CUSTOMER_GROUP_CUSTOMER_GROUP_ID"
+                table="map_marker" column="customer_group_id" referenceTable="customer_group"
+                referenceColumn="customer_group_id" onDelete="CASCADE"/>
+  </table>
+</schema>
+

@@ -53,14 +53,17 @@ class InstallerMap extends AbstractMap {
     $countries = $this->_countryFactory->create();
     $resellerLocations = [];
 
+
     foreach ($resellers->getItems() as $reseller) {
       $account = $this->_customerRepository->getById($reseller->getId());
+      $group = $this->_groupRepository->getById($reseller->getGroupId());
+      $mapMarker = $group->getExtensionAttributes() ? $group->getExtensionAttributes()->getMapMarker() : null;
       foreach($reseller->getAddresses() as $address) {
         if (!empty($address->getLocation())) {
           $location = explode(',', $address->getLocation());
           if (count($location) == 2) {
             $resellerLocations[] = [
-              'type' => $this->getGroupName($reseller->getGroupId()),
+              'type' => $group->getCode(),
               'company' => $address->getCompany(),
               'street' => $address->getStreet(),
               'city' => $address->getCity(),
@@ -71,17 +74,15 @@ class InstallerMap extends AbstractMap {
               'email' => $reseller->getEmail(),
               'website' => $account->getCustomAttribute('website') ? $account->getCustomAttribute('website')->getValue() : '',
               'lat' => $location[0],
-              'lon' => $location[1]
+              'lon' => $location[1],
+              'marker_color' => $mapMarker ? dechex($mapMarker->getMarkerColor()) : null
             ];
           }
         }
       }
     }
+
     return $resellerLocations;
   }
 
-  public function getGroupName($groupId){
-    $group = $this->_groupRepository->getById($groupId);
-    return $group->getCode();
-  }
 }
