@@ -71,16 +71,16 @@
     var markers = [];
   </script>
   <script type="text/x-magento-init">
-{
-"*": {
-"gmap": {
-"apiKey" : <?= json_encode($block->getApiKey()); ?>,
-"lat" : <?= json_encode($block->getMapCentreLatitude()) ?>,
-"lon" : <?= json_encode($block->getMapCentreLongitude()); ?>,
-"zoom" : <?= json_encode($block->getMapZoom()); ?>,
-"resellers" : <?= json_encode($block->getResellers()); ?>
-}
-}
-}
+  {
+    "*": {
+      "gmap": {
+        "apiKey" : <?= json_encode($block->getApiKey()); ?>,
+        "lat" : <?= json_encode($block->getMapCentreLatitude()) ?>,
+        "lon" : <?= json_encode($block->getMapCentreLongitude()); ?>,
+        "zoom" : <?= json_encode($block->getMapZoom()); ?>,
+        "resellers" : <?= json_encode($block->getResellers()); ?>
+      }
+    }
+  }
   </script>
 </section>
