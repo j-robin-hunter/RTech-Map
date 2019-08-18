@@ -1,3 +1,7 @@
+/**
+* Copyright © 2019 Roma Technology Limited. All rights reserved.
+* See COPYING.txt for license details.
+*/
 define([
   'jquery'
 ],
