@@ -12,6 +12,7 @@ abstract class AbstractMap extends Template implements BlockInterface {
   protected $_template;
   protected $_configData;
   protected $_storeId;
+  protected $_mapstyle;
 
   public function __construct(
     \Magento\Framework\View\Element\Template\Context $context,
@@ -25,5 +26,12 @@ abstract class AbstractMap extends Template implements BlockInterface {
 
   public function getApiKey() {
     return $this->_configData->getGooleMapsApiKey($this->_storeId);
+  }
+
+  public function getMapStyle() {
+    if (!$this->_mapstyle) {
+      $this->_mapstyle = $this->_configData->getMapStyle();
+    }
+    return $this->_mapstyle;
   }
 }

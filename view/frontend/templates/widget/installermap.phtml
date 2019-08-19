@@ -75,6 +75,7 @@
     "*": {
       "gmap": {
         "apiKey" : <?= json_encode($block->getApiKey()); ?>,
+        "mapStyle" : <?= $block->getMapStyle(); ?>,
         "lat" : <?= json_encode($block->getMapCentreLatitude()) ?>,
         "lon" : <?= json_encode($block->getMapCentreLongitude()); ?>,
         "zoom" : <?= json_encode($block->getMapZoom()); ?>,

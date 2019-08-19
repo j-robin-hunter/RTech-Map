@@ -13,15 +13,20 @@ use Magento\Store\Model\ScopeInterface;
 class ConfigData extends AbstractHelper
 {
   const GOOGLE_MAPS_API_KEY = 'map/google/api_key';
-  const INSTALLER_MAP_CENTRE_LAT = 'map/installer/lat';
-  const INSTALLER_MAP_CENTRE_LON = 'map/installer/lon';
-  const INSTALLER_MAP_ZOOM = 'map/installer/zoom';
-  const INSTALLER_CUSTOMER_GROUPS = 'map/installer/customer_groups';
+  const DEFAULT_CENTRE_LAT = 54.6;
+  const DEFAULT_CENTRE_LON = -3.2;
+  const DEFAULT_ZOOM = 6;
+  const MAPSTYLE_FILE = 'data/mapstyle.json';
+
+  protected $scopeConfig;
+  protected $assetRepo;
 
   public function __construct(
-    ScopeConfigInterface $scopeConfig
+    \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+    \Magento\Framework\View\Asset\Repository $assetRepo
   ) {
     $this->scopeConfig = $scopeConfig;
+    $this->assetRepo = $assetRepo;
   }
 
   public function getGooleMapsApiKey($storeId) {
@@ -32,35 +37,23 @@ class ConfigData extends AbstractHelper
     );
   }
 
-  public function getInstallerMapCentreLatitude($storeId) {
-    return $this->scopeConfig->getValue(
-      self::INSTALLER_MAP_CENTRE_LAT,
-      ScopeInterface::SCOPE_STORE,
-      $storeId
-    );
+  public function getDefaultMapCentreLatitude($storeId) {
+    return self::DEFAULT_CENTRE_LAT;
   }
 
-  public function getInstallerMapCentreLongitude($storeId) {
-    return $this->scopeConfig->getValue(
-      self::INSTALLER_MAP_CENTRE_LON,
-      ScopeInterface::SCOPE_STORE,
-      $storeId
-    );
+  public function getDefaultMapCentreLongitude($storeId) {
+    return self::DEFAULT_CENTRE_LON;
   }
 
-  public function getInstallerMapZoom($storeId) {
-    return $this->scopeConfig->getValue(
-      self::INSTALLER_MAP_ZOOM,
-      ScopeInterface::SCOPE_STORE,
-      $storeId
-    );
+  public function getDefaultMapZoom($storeId) {
+    return self::DEFAULT_ZOOM;
   }
 
-  public function getInstallerCustomerGroups($storeId) {
-    return explode(',', $this->scopeConfig->getValue(
-      self::INSTALLER_CUSTOMER_GROUPS,
-      ScopeInterface::SCOPE_STORE,
-      $storeId
-    ));
+  public function getMapStyle() {
+    try {
+      return file_get_contents($this->assetRepo->getUrl('RTech_Map::' . self::MAPSTYLE_FILE));
+    } catch (\Exception $e) {
+      return '[]';
+    }
   }
 }
