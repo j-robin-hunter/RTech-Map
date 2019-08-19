@@ -38,15 +38,15 @@ class ConfigData extends AbstractHelper
   }
 
   public function getDefaultMapCentreLatitude($storeId) {
-    return self::DEFAULT_CENTRE_LAT;
+    return (string)self::DEFAULT_CENTRE_LAT;
   }
 
   public function getDefaultMapCentreLongitude($storeId) {
-    return self::DEFAULT_CENTRE_LON;
+    return (string)self::DEFAULT_CENTRE_LON;
   }
 
   public function getDefaultMapZoom($storeId) {
-    return self::DEFAULT_ZOOM;
+    return (string)self::DEFAULT_ZOOM;
   }
 
   public function getMapStyle() {
