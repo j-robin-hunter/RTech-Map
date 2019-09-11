@@ -71,7 +71,7 @@ class InstallerMap extends AbstractMap {
               'postcode' => $address->getPostcode(),
               'country' => $countries->loadByCode($address->getCountryId())->getName(),
               'telephone' => $address->getTelephone(),
-              'email' => $reseller->getEmail(),
+              'email' => $address->getLocalEmail() ? : $reseller->getEmail(),
               'website' => $account->getCustomAttribute('website') ? $account->getCustomAttribute('website')->getValue() : '',
               'lat' => $location[0],
               'lon' => $location[1],
