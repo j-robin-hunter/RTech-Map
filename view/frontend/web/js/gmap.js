@@ -8,7 +8,7 @@ define([
   function($) {
 
     return function (config) {
-      $.getScript('https://maps.googleapis.com/maps/api/js?key=' + config.apiKey + "&region=GB,libraries=geometry", function () {
+      $.getScript('https://maps.googleapis.com/maps/api/js?key=' + config.apiKey + "&region=GB&libraries=geometry", function () {
           initialise();
       });
 
