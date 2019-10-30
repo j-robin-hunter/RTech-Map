@@ -15,6 +15,8 @@ define([
       function initialise() {
         var geocoder = new google.maps.Geocoder();
         var styledMapType = [];
+        var selectedId = -1;
+        
         if (config.mapStyle) {
           styledMapType = new google.maps.StyledMapType(config.mapStyle);
         }
@@ -106,18 +108,27 @@ define([
           });
         });
 
-        google.maps.event.addListener(infoWindow,'closeclick',function(){
+        google.maps.event.addListener(infoWindow,'closeclick',function() {
+          selectedId = -1;
           $('.resellerContainer.highlight').toggleClass('highlight');
           $('li.highlight').toggleClass('highlight');
         });
 
         $('.resellerContainer').mouseover(function () {
-          google.maps.event.trigger(markers[this.id], 'click');
+          if (selectedId < 0) {
+            google.maps.event.trigger(markers[this.id], 'click');
+          }
         });
 
         $('.resellerContainer').click(function () {
+          if (selectedId == this.id) {
+            selectedId = -1;
+            map.setZoom(parseInt(config.zoom));
+          } else {
+            selectedId = this.id;
+            map.setZoom(10);
+          }
           map.setCenter(markers[this.id].position);
-          map.setZoom(10);
           google.maps.event.trigger(markers[this.id], 'click');
         });
 
@@ -133,6 +144,7 @@ define([
               }
               map.setCenter(markers[closest.index].position);
               map.setZoom(10);
+              selectedId = closest.index;
               google.maps.event.trigger(markers[closest.index], 'click');
             } else {
               alert('Geocode was not successful for the following reason: ' + status);
