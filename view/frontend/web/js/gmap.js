@@ -44,29 +44,13 @@ define([
 
           if (reseller.company) {
             beforeend += '<div class="infowindowCompany">';
-            if (reseller.website) {
-              beforeend += '<a class="infowindowComnpany_Link" href="' + reseller.website + '" target="_blank">' + reseller.company + '</a></div>';
-            } else {
-              beforeend += reseller.company + '</div>';
-            }
+            beforeend += reseller.company + '</div>';
           }
 
           beforeend +=
               '<div class="infowindowType">' + reseller.type + '</div>' +
               '<div class="infowindowLocation"><span>' + reseller.city + '</span><span>' + ', ' + reseller.postcode + '</span></div>' +
               '<div class="infowindowContact">';
-          if (reseller.telephone) {
-            beforeend +=
-              '<div class="infowindowTelephone">' +
-                '<a class="infowindowTelephone_Link" href="tel:' + reseller.telephone + '" target="_blank">' + reseller.telephone + '</a>' +
-              '</div>'
-          }
-          if (reseller.email) {
-            beforeend +=
-              '<div class="infowindowEmail">' +
-                '<a class="infowindowEmail_Link" href="mailto:' + reseller.email + '" target="_blank">' + reseller.email + '</a>' +
-              '</div>';
-          }
           beforeend += '</div>';
 
           infowincontent.insertAdjacentHTML('beforeend', beforeend);
@@ -120,16 +104,18 @@ define([
           }
         });
 
-        $('.resellerContainer').click(function () {
-          if (selectedId == this.id) {
-            selectedId = -1;
-            map.setZoom(parseInt(config.zoom));
-          } else {
-            selectedId = this.id;
-            map.setZoom(10);
+        $('.resellerContainer').click(function (event) {
+          if (!event.target.matches('a.resellerEmail_Link')) {
+            if (selectedId == this.id) {
+              selectedId = -1;
+              map.setZoom(parseInt(config.zoom));
+            } else {
+              selectedId = this.id;
+              map.setZoom(10);
+            }
+            map.setCenter(markers[this.id].position);
+            google.maps.event.trigger(markers[this.id], 'click');
           }
-          map.setCenter(markers[this.id].position);
-          google.maps.event.trigger(markers[this.id], 'click');
         });
 
         $('.installmap_Nearest_Search').click(function () {

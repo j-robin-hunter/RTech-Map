@@ -85,4 +85,10 @@ class InstallerMap extends AbstractMap {
     return $resellerLocations;
   }
 
+  public function getContactUrl($reseller) {
+    $subject = __('For the attention of ');
+    $subject .= empty($reseller) ? 'Romatech Ltd' : $reseller;
+    return $this->getUrl('contact', ['subject' => $subject]);
+  }
+
 }

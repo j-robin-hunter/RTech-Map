@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 © Roma Technology Ltd. All rights reserved.
+* See COPYING.txt for license details.
+**/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Contact Us</title>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="RTech\Map\Block\ContactForm" name="contactForm" template="RTech_Map::contact/form.phtml">
+                <container name="form.additional.info" label="Form Additional Info"/>
+                <arguments>
+                    <argument name="view_model" xsi:type="object">RTech\Map\ViewModel\UserDataProvider</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

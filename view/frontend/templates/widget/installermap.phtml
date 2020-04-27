@@ -20,9 +20,7 @@
           <li>
             <div class="resellerContainer" id="<?= $index; ?>">
               <div class="resellerCompany">
-                <?php if (!empty($reseller['website'])) { ?>
-                <a href="<?= $reseller['website']; ?>" target="_blank"><?= $reseller['company']; ?></a>
-                <?php } else { echo $reseller['company']; } ?>
+                <?= $reseller['company'] ?>
               </div>
               <div class="resellerType">
                 <?= $reseller['type']; ?>
@@ -45,16 +43,9 @@
                 </div>
               </div>
               <div class="resellerContact">
-                <?php if (!empty($reseller['telephone'])) { ?>
-                <div class="resellerTelephone">
-                  <a class="resellerTelephone_Link" href="tel:<?= $reseller['telephone']; ?>" target="_blank"><?= $reseller['telephone']; ?></a>
-                </div>
-                <?php } ?>
-                <?php if (!empty($reseller['email'])) { ?>
                 <div class="resellerEmail">
-                  <a class="resellerEmail_Link" href="mailto:<?= $reseller['email']; ?>" target="_blank"><?= $reseller['email']; ?></a>
+                  <a class="resellerEmail_Link" href="<?= $block->getContactUrl($reseller['company']); ?>"><?= __('Contact Installer') ?></a>
                 </div>
-                <?php } ?>
               </div>
             </div>
           </li>

@@ -12,4 +12,5 @@
   <type name="Magento\Customer\Controller\Adminhtml\Group\Save">
     <plugin name="group_save" type="RTech\Map\Plugin\GroupSavePlugin" sortOrder="1"/>
   </type>
+  <preference for="Magento\Contact\Controller\Index\Index" type="RTech\Map\Controller\Contact\Index" /> 
 </config>
