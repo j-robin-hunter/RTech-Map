@@ -8,6 +8,9 @@ define([
   function($) {
 
     return function (config) {
+      var home = null;
+      var homeImage = null;
+
       $.getScript('https://maps.googleapis.com/maps/api/js?key=' + config.apiKey + "&region=GB&libraries=geometry", function () {
           initialise();
       });
@@ -128,8 +131,24 @@ define([
                   closest = {index:i, distance:distance}
                 }
               }
-              map.setCenter(markers[closest.index].position);
-              map.setZoom(10);
+              if (home) {
+                home.setMap(null);
+              } else {
+                homeImage = new google.maps.MarkerImage(
+                  "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|EB5202",
+                  new google.maps.Size(21, 34),
+                  new google.maps.Point(0,0),
+                  new google.maps.Point(10, 34)
+                );
+              }
+              home = new google.maps.Marker({map: map, position: results[0].geometry.location, icon: homeImage, title: "Search Location"});
+              home.setMap(map);
+
+              var bounds = new google.maps.LatLngBounds();
+              bounds.extend(home.position);
+              bounds.extend(markers[closest.index].position);
+              map.fitBounds(bounds);
+              
               selectedId = closest.index;
               google.maps.event.trigger(markers[closest.index], 'click');
             } else {
